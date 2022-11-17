@@ -13,7 +13,7 @@ Please note that the website has a few infinite loops, so if the parsing takes m
 
 """
 
-def get_category_tree(category, mapped_json=cattree):
+def get_category_tree(category, mapped_json):
     fields = []
 
     if "categories" in mapped_json[category].keys():
