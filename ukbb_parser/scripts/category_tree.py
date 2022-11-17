@@ -36,19 +36,19 @@ def get_category_tree_web(category):
  
     fields = []
 
-    df = pd.read_html("http://biobank.ctsu.ox.ac.uk/crystal/label.cgi?id="+category)
-    if df[0].ix[0][0] == "Field ID":
-        fields += list(df[0][0].values[1:])
+    df = pd.read_html(f"http://biobank.ctsu.ox.ac.uk/crystal/label.cgi?id={category}")
+    if df[0].columns[0] == "Field ID":
+        fields += list(df[0].values[:,0])
     else:
-        subcategories = df[0][0].values[1:]
+        subcategories = df[0].values[:,0]
         while len(subcategories) != 0:
             subcategories1 = []
             for s in subcategories:
-                df_sub = pd.read_html("http://biobank.ctsu.ox.ac.uk/crystal/label.cgi?id="+s)
-                if df_sub[0].ix[0][0] == "Field ID":
-                    fields += list(df_sub[0][0].values[1:])
+                df_sub = pd.read_html(f"http://biobank.ctsu.ox.ac.uk/crystal/label.cgi?id={s}")
+                if df_sub[0].columns[0] == "Field ID":
+                    fields += list(df_sub[0].values[:,0])
                 else:
-                    subcategories1 += list(df_sub[0][0].values[1:])
+                    subcategories1 += list(df_sub[0].values[:,0])
             subcategories = subcategories1
 
     return fields
